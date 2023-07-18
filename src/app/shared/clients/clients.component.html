@@ -1,0 +1,22 @@
+<div class="section mt-3">
+  <div class="px-3">
+      <div class="theme-container">
+          <h1 class="section-title mb-3">Nos Partenaires</h1>
+          <p class="text-center">Notre expérience dans le domaine immobilier nous donne une crédibilité toute particulière aux yeux de nos partenaires.</p>
+
+          <div class="clients-carousel"> 
+              <div class="swiper-container h-100" [swiper]="config"> 
+                  <div class="swiper-wrapper h-100">      
+                      <div *ngFor="let client of clients" class="swiper-slide">
+                          <div class="client-item"> 
+                              <img [attr.data-src]="client.image" class="swiper-lazy"> 
+                              <div class="swiper-lazy-preloader"></div>
+                          </div>
+                      </div>
+                  </div> 
+              </div>
+          </div>
+              
+      </div>
+  </div>   
+</div>

@@ -1,0 +1,51 @@
+<div class="section default">
+    <div class="px-3">
+        <div class="theme-container">
+            <h1 class="section-title">Notre Mission</h1>            
+
+            <mat-card class="p-0" fxLayout="row wrap"> 
+                <div fxFlex="100" fxFlex.gt-md="50" class="p-3">            
+                   <div fxLayout="row wrap" >
+                        <div fxFlex="100" fxFlex.gt-xs="50" class="p-2"  *ngFor="let item of mission; let i= index">
+                            <mat-icon color="primary" class="mat-icon-xlg">s</mat-icon>
+                            <h2 class="capitalize fw-600 my-2">{{item.titre}}</h2>
+                            <ng-container *ngIf="!item.viewAll; else showAllSection">
+                            <p>{{item.libelle | truncatemission}}
+                                <ng-container>
+                                    <a routerLink="/" (click)="this.changeTheViewAllStatus(this.mission, i)">... voir plus</a>
+                                </ng-container>    
+                            </p>
+                        </ng-container>
+                        <ng-template #showAllSection>
+                            <p>{{item.libelle}} 
+                                <ng-container>
+                                    <a routerLink="/" (click)="this.changeTheViewAllStatus(this.mission, i)">... voir moins</a>
+                                </ng-container>
+                            </p>  
+                        </ng-template>
+                        </div>
+                        <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="p-2">
+                            <mat-icon color="primary" class="mat-icon-xlg">b</mat-icon>
+                            <h2 class="capitalize fw-600 my-2">belles idées</h2>
+                            <p>En tant qu'expert, nous pouvons vous dire que la création de belles idées est une mission importante pour toute agence immobilière qui souhaite se démarquer dans un marché compétitif. Les belles idées sont des idées novatrices, créatives et inspirantes qui peuvent aider une agence immobilière à attirer des clients, à renforcer sa réputation et à développer son activité.</p>
+                        </div> -->
+                        <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="p-2">
+                            <mat-icon color="primary" class="mat-icon-xlg">c</mat-icon>
+                            <h2 class="capitalize fw-600 my-2">collaboration</h2>
+                            <p>En tant qu'expert, nous pouvons vous dire que la collaboration est une mission essentielle pour toute agence immobilière qui souhaite réussir dans un marché compétitif. La collaboration implique de travailler en équipe avec les membres de l'agence immobilière, les clients et les partenaires externes pour atteindre des objectifs communs.</p>
+                        </div> -->
+                        <!-- <div fxFlex="100" fxFlex.gt-xs="50" class="p-2">
+                            <mat-icon color="primary" class="mat-icon-xlg">f</mat-icon>
+                            <h2 class="capitalize fw-600 my-2">Facile à trouver</h2>
+                            <p>En tant qu'expert, nous pouvons vous dire que le lieu de travail ou bureau est une mission importante pour toute agence immobilière qui souhaite offrir un environnement de travail productif et agréable pour ses employés. Le choix du lieu de travail peut avoir un impact significatif sur la productivité, la créativité et le bien-être des employés, ainsi que sur l'image de l'entreprise auprès des clients et des partenaires commerciaux.</p>
+                        </div> -->
+                   </div>                     
+                </div> 
+                <div fxFlex="100" fxFlex.gt-md="50" fxShow="false" fxShow.gt-md>                    
+                    <img src="assets/images/others/mission.jpg" alt="mission" class="mw-100 d-block">                
+                </div>            
+            </mat-card>
+                
+        </div>
+    </div>   
+</div>
