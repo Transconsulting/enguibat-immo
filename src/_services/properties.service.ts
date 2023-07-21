@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class PropertiesService {
-public API_URL = "http://localhost:8080/";
+public API_URL = environment.url_backend;
 
   public url = environment.url + '/assets/data/'; 
   public apiKey = 'AIzaSyAO7Mg2Cs1qzo_3jkKkZAKY6jtwIlm41-I';
