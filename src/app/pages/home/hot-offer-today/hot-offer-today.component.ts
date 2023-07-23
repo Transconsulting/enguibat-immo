@@ -13,7 +13,6 @@ export class HotOfferTodayComponent implements OnInit {
   constructor(public appService:AppService) { }
 
   ngOnInit() {
-    console.log(this.b)
     this.appService.getPropertyById(this.propertyId).subscribe(property=>{
       this.property = property;
     }) 

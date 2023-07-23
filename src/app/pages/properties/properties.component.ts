@@ -142,7 +142,6 @@ export class PropertiesComponent implements OnInit {
     this.viewCol = obj.viewCol; 
   } 
 
-
   public onPageChange(e){ 
     this.pagination.page = e.pageIndex + 1;
     this.getProperties();

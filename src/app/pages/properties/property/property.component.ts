@@ -65,27 +65,14 @@ export class PropertyComponent implements OnInit {
     this.sub = this.activatedRoute.params.subscribe(params => { 
       this.getPropertyById(params['id']); 
     });
-    this.getRelatedProperties();
-    this.getFeaturedProperties();
-    this.getAgent(1);
     if(window.innerWidth < 960){
       this.sidenavOpen = false;
       if(this.sidenav){
         this.sidenav.close();
       } 
     };
-    this.mortgageForm = this.fb.group({
-      principalAmount: ['', Validators.required],
-      downPayment: ['', Validators.required], 
-      interestRate: ['', Validators.required],
-      period: ['', Validators.required]
-    });
-    this.contactForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, emailValidator])],
-      phone: ['', Validators.required],
-      message: ['', Validators.required]
-    });
+   
+
   } 
 
   ngOnDestroy() {

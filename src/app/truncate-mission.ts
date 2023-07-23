@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TruncateMissionPipe implements PipeTransform {
 
   transform(value: string): string {
-    if (value.length > 150) {
-      return value.substr(0, 150) + '...';
+    if (value.length > 100) {
+      return value.substr(0, 100) + '...';
     }
     return value;
   }

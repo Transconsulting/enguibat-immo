@@ -97,7 +97,7 @@ export class AppService {
   public addToFavorites(property:Property, direction){
     if(!this.Data.favorites.filter(item=>item.id == property.id)[0]){
       this.Data.favorites.push(property);
-      this.snackBar.open('The property "' + property.title + '" has been added to favorites.', '×', {
+      this.snackBar.open('La propriété "' + property.title + '" a été ajouté à la liste de vos favoris.', '×', {
         verticalPosition: 'top',
         duration: 3000,
         direction: direction 

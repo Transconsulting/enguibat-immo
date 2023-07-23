@@ -23,19 +23,26 @@
         <app-horizontal-menu [menuParentId]="0"></app-horizontal-menu>
     </div> 
     <div fxLayout="row" fxLayoutAlign="start center">
-      <a routerLink="/account/favorites" mat-icon-button matTooltip="Favorites" fxShow="false" fxShow.gt-md>
+      <!-- <a routerLink="/account/favorites" mat-icon-button matTooltip="Favorites" fxShow="false" fxShow.gt-md>
           <mat-icon [matBadge]="appService.Data.favorites.length" 
                     [matBadgeHidden]="appService.Data.favorites.length == 0" 
                     matBadgeSize="small" 
                     matBadgeColor="warn">favorite_border</mat-icon>
-      </a>
-      <a routerLink="/compare" mat-icon-button matTooltip="Compare list" fxShow="false" fxShow.gt-md class="mr-3 ml-2">
+      </a> -->
+      <a  mat-icon-button matTooltip="Favorites" fxShow="false" fxShow.gt-md>
+        <mat-icon [matBadge]="appService.Data.favorites.length" 
+                  [matBadgeHidden]="appService.Data.favorites.length == 0" 
+                  matBadgeSize="small" 
+                  matBadgeColor="warn">favorite_border</mat-icon>
+    </a>
+      <a  mat-icon-button matTooltip="Compare list" fxShow="false" fxShow.gt-md class="mr-3 ml-2">
           <mat-icon [matBadge]="appService.Data.compareList.length" 
                     [matBadgeHidden]="appService.Data.compareList.length == 0" 
                     matBadgeSize="small" 
                     matBadgeColor="warn">compare_arrows</mat-icon>
       </a>      
-      <a routerLink="/submit-property" mat-mini-fab color="primary" fxHide="false" fxHide.gt-xs><mat-icon>add</mat-icon></a>
+      <!-- <a routerLink="/submit-property" disabled mat-mini-fab color="primary" fxHide="false" fxHide.gt-xs><mat-icon>add</mat-icon></a> -->
+      <a   mat-mini-fab color="primary" fxHide="false" fxHide.gt-xs><mat-icon>add</mat-icon></a>
       <!-- <a routerLink="/submit-property" mat-raised-button color="primary" fxShow="false" fxShow.gt-xs class="uppercase">{{ 'SUBMIT_PROPERTY' | translate }}</a> -->
      <ng-container>
        <a routerLink="/custum/login" mat-raised-button color="primary" fxShow="false" fxShow.gt-xs class="uppercase">Connectez-vous</a>
