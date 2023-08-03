@@ -11,20 +11,21 @@ const httpOptions = {
   providedIn: "root",
 })
 export class AuthService {
+public API_URL = environment.url_backend;
+
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
-    console.log(`user: ${username}`);
     return this.http
       // .post(AUTH_API, { username, password }, httpOptions)
-      .post("http://localhost:8080/authenticate", { username, password }, httpOptions)
+      .post(this.API_URL+"authenticate", { username, password }, httpOptions)
       .toPromise()
       .then((res) => res);
   }
 
   register(user: User): Observable<any> {
     return this.http.post(
-      "http://localhost:8080/" + "utilisateur",
+      this.API_URL+ "register",
       user,
       httpOptions
     );

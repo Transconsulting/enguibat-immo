@@ -89,13 +89,17 @@
                   <div *ngIf="secondMotDePass.errors?.['maxlength']">
                     <small>Le champ doit avoir au maximum 15 caractères</small>
                   </div>
-                  <div *ngIf="this.secondMotDePass != this.user.password">
-                    <small>Le champ doit avoir au maximum 15 caractères</small>
-                  </div>
+            
                   
                 </div>
+
+                <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIF="!this.isSucced">  
+                  <a mat-button  color="accent" class="w-100">la création de compte a échoué</a>  
+                </div>
+
                 <div class="text-center mt-2"> 
-                    <button mat-raised-button color="accent" [disabled]="!formValues.form.valid || (this.secondMotDePasse != this.user.password)" class="uppercase" type="submit">
+
+                    <button mat-raised-button color="accent" [disabled]="!formValues.form.valid" class="uppercase" type="submit">
                         Valider
                     </button>
                 </div> 

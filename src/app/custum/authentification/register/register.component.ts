@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   public user: User
   public registerForm: UntypedFormGroup;
   public hide = true;
+  public isSucced: Boolean
   public secondMotDePasse: any
   public userTypes = [
     { id: 1, name: 'Agent' },
@@ -36,13 +37,15 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(formValues: NgForm){
-    this.user.roles.push('USER')
+    this.user.roles.push('CLIENT')
+    console.log(this.user)
      this.authService.register(this.user)
        .subscribe(()=>{
-         alert("bonjour")
+          this.isSucced= true
+          this.router.navigateByUrl('/custum/register')
        },
        (error)=>{
-
+        this.isSucced= false
        })
   }
 
