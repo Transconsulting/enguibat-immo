@@ -38,7 +38,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(formValues: NgForm){
     this.user.roles.push('CLIENT')
-    console.log(this.user)
      this.authService.register(this.user)
        .subscribe(()=>{
           this.isSucced= true
