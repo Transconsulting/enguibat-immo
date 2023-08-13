@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url_backend:"http://localhost:8080/",
+  url_backend:"http://traconsulting-guinee.com:8283/immobilier-backend/",
   url: ''
 };
 
