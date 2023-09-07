@@ -23,12 +23,7 @@
         <app-horizontal-menu [menuParentId]="0"></app-horizontal-menu>
     </div> 
     <div fxLayout="row" fxLayoutAlign="start center">
-      <!-- <a routerLink="/account/favorites" mat-icon-button matTooltip="Favorites" fxShow="false" fxShow.gt-md>
-          <mat-icon [matBadge]="appService.Data.favorites.length" 
-                    [matBadgeHidden]="appService.Data.favorites.length == 0" 
-                    matBadgeSize="small" 
-                    matBadgeColor="warn">favorite_border</mat-icon>
-      </a> -->
+     
       <a  mat-icon-button matTooltip="Favorites" fxShow="false" fxShow.gt-md>
         <mat-icon [matBadge]="appService.Data.favorites.length" 
                   [matBadgeHidden]="appService.Data.favorites.length == 0" 
@@ -41,13 +36,18 @@
                     matBadgeSize="small" 
                     matBadgeColor="warn">compare_arrows</mat-icon>
       </a>      
-      <!-- <a routerLink="/submit-property" disabled mat-mini-fab color="primary" fxHide="false" fxHide.gt-xs><mat-icon>add</mat-icon></a> -->
-      <a   mat-mini-fab color="primary" fxHide="false" fxHide.gt-xs><mat-icon>add</mat-icon></a>
-      <!-- <a routerLink="/submit-property" mat-raised-button color="primary" fxShow="false" fxShow.gt-xs class="uppercase">{{ 'SUBMIT_PROPERTY' | translate }}</a> -->
-     <ng-container>
+   
+      <ng-container *ngIf="!this.connected; else elseSection">
+      <a   mat-mini-fab color="primary" fxHide="false" (click)="signout()" fxHide.gt-xs><mat-icon>logout</mat-icon></a>
+
        <a routerLink="/custum/login" mat-raised-button color="primary" fxShow="false" fxShow.gt-xs class="uppercase">Connectez-vous</a>
      </ng-container>
+     <ng-template #elseSection>
+      <a   mat-mini-fab color="warn" fxHide="false" fxHide.gt-xs><mat-icon>login</mat-icon></a>
 
+      <a  mat-raised-button color="warn" fxShow="false" (click)="signout()" fxShow.gt-xs class="uppercase">Deconnectez-vous</a>
+
+     </ng-template>
     </div>   
   </div>     
 </mat-toolbar>

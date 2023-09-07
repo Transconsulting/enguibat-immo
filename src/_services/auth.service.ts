@@ -25,7 +25,7 @@ public API_URL = environment.url_backend;
 
   register(user: User): Observable<any> {
     return this.http.post(
-      this.API_URL+ "register",
+      this.API_URL+ "utilisateur",
       user,
       httpOptions
     );

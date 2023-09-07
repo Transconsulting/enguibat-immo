@@ -30,7 +30,6 @@ export class Property {
                 public views: number){ }
 } 
 
-
 export class Area {
     constructor(public id: number, 
                 public value: number,

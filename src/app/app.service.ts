@@ -236,20 +236,6 @@ export class AppService {
         let statuses = [];
         params.propertyStatus.forEach(status => { statuses.push(status) });           
         let properties = [];
-        // data.filter(property =>{
-        //   typeAnnonceChoisi.push(property)
-        //   console.log("Le status",statuses)
-        //   typeAnnonceChoisi.forEach(status => { 
-        //     console.log("Le status",statuses)
-        //     if(statuses.indexOf(status) > -1){   
-        //       if(!properties.includes(property)){
-        //         properties.push(property);
-        //       }                
-        //     }
-        //   })
-        // }
-        // );
-        
         for (let i = 0; i < data.length; i++) {
           if(statuses.indexOf(data[i].typeAnnonce) > -1){
             properties.push(data[i]);
@@ -309,7 +295,6 @@ export class AppService {
       }
 
       if(params.villeUiid){
-        console.log(params.villeUiid)
         let properties1 = [];
 
         for (let i = 0; i < data.length; i++) {
@@ -425,8 +410,6 @@ export class AppService {
       }
       
     }
-
-    
     //for show more properties mock data 
     // for (var index = 0; index < 4; index++) {
     //   data = data.concat(data);  

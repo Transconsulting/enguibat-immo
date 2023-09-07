@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   public annonce:  any
   public settings: Settings;
   public annonceId: any;
+  public isLoading= true;
   constructor(private proprieteService: PropertiesService,public appSettings:AppSettings, public appService:AppService, public mediaObserver: MediaObserver, private propertieService: PropertiesService) {
     this.settings = this.appSettings.settings;
 
@@ -63,15 +64,59 @@ export class HomeComponent implements OnInit {
   }
 
   public getProperties(){
-    this.propertieService.listeProperty().subscribe((data:any) => {
-      // console.log(new Date(data[0].dateCreated).getTime())
-      this.annonceId= this.trouverAnnonceMoinsChere(data)
+    if(this.getProprieteFromSessionStorage() == null){
+      this.propertieService.listeProperty().subscribe((data:any) => {
+        this.setProprieteToSessionStorage(data)
+        // console.log(new Date(data[0].dateCreated).getTime())
+        if(this.properties && this.properties.length > 0){
+          this.settings.loadMore.page++;
+          this.pagination.page = this.settings.loadMore.page;
+        }
+        // // Cette instruction permet d'appliquer un filtre sur les données retournées
+        let result = this.filterData(data);
+        if(result.data.length == 0){
+          this.properties.length = 0;
+          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+          this.message = 'Aucun résultat trouvé';
+          return false;
+        }
+        if(this.properties && this.properties.length > 0){
+          this.properties = this.properties.concat(result.data);
+          this.isLoading= false
+        }
+        else{
+          this.properties = result.data;
+          this.isLoading= false
+        }
+  
+        this.pagination = result.pagination;
+        this.message = null;
+  
+        if(this.properties.length == this.pagination.total){
+          this.settings.loadMore.complete = true;
+          this.settings.loadMore.result = this.properties.length;
+        }
+        else{
+          this.settings.loadMore.complete = false;
+        }
+        if(this.settings.header == 'map'){
+          this.locations.length = 0;
+          this.properties.forEach(p => {
+            let loc = new Location(p.id, p.location.lat, p.location.lng);
+            this.locations.push(loc);
+          });
+          this.locations = [...this.locations];
+        }
+      })
+    }
+    else{
+      this.properties= this.getProprieteFromSessionStorage()
       if(this.properties && this.properties.length > 0){
-        this.settings.loadMore.page++;
+        // this.settings.loadMore.page++;
         this.pagination.page = this.settings.loadMore.page;
       }
       // // Cette instruction permet d'appliquer un filtre sur les données retournées
-      let result = this.filterData(data);
+      let result = this.filterData(this.properties);
       if(result.data.length == 0){
         this.properties.length = 0;
         this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -79,10 +124,14 @@ export class HomeComponent implements OnInit {
         return false;
       }
       if(this.properties && this.properties.length > 0){
-        this.properties = this.properties.concat(result.data);
+        let result2 = this.filterData(this.getProprieteFromSessionStorage());
+        this.properties = result2.data;
+        this.isLoading= false
       }
       else{
-        this.properties = result.data;
+        let result2 = this.filterData( this.getProprieteFromSessionStorage());
+        this.properties = result2.data;
+        this.isLoading= false
       }
 
       this.pagination = result.pagination;
@@ -103,8 +152,9 @@ export class HomeComponent implements OnInit {
         });
         this.locations = [...this.locations];
       }
-      console.log(this.properties)
-    })
+
+    }
+    
   }
 
   ngDoCheck(){
@@ -191,7 +241,15 @@ export class HomeComponent implements OnInit {
     this.viewCol = obj.viewCol;
   }
 
+  setProprieteToSessionStorage(data){
+    sessionStorage.setItem("proprietes", JSON.stringify(data))
+  }
 
+  public getProprieteFromSessionStorage(): any{
+    let proprieteFromSessionStorage= JSON.parse(sessionStorage.getItem('proprietes'))
+
+    return proprieteFromSessionStorage
+  }
   public getFeaturedProperties(){
     this.appService.getFeaturedProperties().subscribe(properties=>{
       this.featuredProperties = properties;
@@ -209,7 +267,7 @@ export class HomeComponent implements OnInit {
   
     for (var i = 1; i < tableau.length; i++) {
       if (tableau[i].priceDollar.rent < annonceMoinsChere.priceDollar.rent) {
-        // Si l'le prix de  l'annonce actuelle actuelle est plus petit, la mettre à jour
+        // Si le prix de  l'annonce actuelle est plus petit, la mettre à jour
         annonceMoinsChere = tableau[i];
       }
     }

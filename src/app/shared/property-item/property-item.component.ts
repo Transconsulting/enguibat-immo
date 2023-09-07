@@ -69,7 +69,8 @@ export class PropertyItemComponent implements OnInit {
     }  
   }
   getCreatedDateInTwoDays(dateCreated: any){
-    return new Date(dateCreated).getTime() + 172800000
+    // une semaine correspond à 604800000 en timeStamp
+    return new Date(dateCreated).getTime() + 604800000
   }
 
   getCurrentDate(){

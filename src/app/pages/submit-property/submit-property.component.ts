@@ -78,7 +78,6 @@ export class SubmitPropertyComponent implements OnInit {
   public onSelectionChange(e:any){ 
     if(e.selectedIndex == 4){   
       this.horizontalStepper._steps.forEach(step => step.editable = false);
-      console.log(this.submitForm.value);      
     }
   }
   public reset(){

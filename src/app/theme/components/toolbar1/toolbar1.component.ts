@@ -11,9 +11,26 @@ export class Toolbar1Component implements OnInit {
   constructor(public appService:AppService, public sharedService: SharedService) { }
 
   ngOnInit() { 
+    this.checkIfUserIsConnected()
   }
-
+  public connected= false
   public sidenavToggle(){
     this.onMenuIconClick.emit();
+  }
+
+  checkIfUserIsConnected(){
+    let connectionStatus= sessionStorage.getItem('auth-token-guine')
+    if(connectionStatus != null){
+      this.connected= true
+    }
+  }
+
+
+  public signout(){
+          let b= confirm("Voulez-vous vraiment vous deconnecter?")
+          if(b){
+            this.connected= false
+            sessionStorage.clear()
+          }
   }
 }

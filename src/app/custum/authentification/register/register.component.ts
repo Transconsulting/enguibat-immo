@@ -33,7 +33,6 @@ export class RegisterComponent implements OnInit {
     // this.user= new User("","","","","","", [])
   }
   ngOnInit() {
-   
   }
 
   onSubmit(formValues: NgForm){
@@ -41,26 +40,17 @@ export class RegisterComponent implements OnInit {
      this.authService.register(this.user)
        .subscribe(()=>{
           this.isSucced= true
-          this.router.navigateByUrl('/custum/register')
+          this.router.navigateByUrl('/custum/login')
        },
        (error)=>{
         this.isSucced= false
        })
   }
 
-  // public confirmationMotDePasse(premierMotDePasse, secondMotDePasse): Boolean{
-  //   if(premierMotDePasse!= secondMotDePasse){
-  //     return true
-  //   }
-  //   else{
-  //     return false
-  //   }
-  // }
-
+  
 
   public onRegisterFormSubmit(values:Object):void {
     if (this.registerForm.valid) {
-      console.log(values);
       this.snackBar.open('You registered successfully!', '×', { panelClass: 'success', verticalPosition: 'top', duration: 3000 });
     }
   }

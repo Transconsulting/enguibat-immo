@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { AppService } from 'src/app/app.service';
 import { Property } from 'src/app/app.models';
 import { SwiperConfigInterface, SwiperDirective } from 'ngx-swiper-wrapper';
@@ -8,14 +9,10 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AppSettings, Settings } from 'src/app/app.settings';
 import { CompareOverviewComponent } from 'src/app/shared/compare-overview/compare-overview.component';
 import { EmbedVideoService } from 'ngx-embed-video'; 
-import { emailValidator } from 'src/app/theme/utils/app-validators';
 import { PropertiesService } from 'src/_services/properties.service';
 import { UserService } from 'src/_services/user.service';
 import { TokenStorageService } from 'src/_services/token-storage.service';
-
 import { InteresseService } from 'src/_services/interesse.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ModalsComponent } from 'src/app/custum/modals/modals.component';
 import { ModalService } from 'src/app/_services/modal.service';
 
 @Component({
@@ -46,6 +43,8 @@ export class PropertyComponent implements OnInit {
   public monthlyPayment:any;
   public annonceId: string
   public contactForm: UntypedFormGroup;
+  isReady: boolean= false;
+  detailParceLApp: any;
   constructor(public appSettings:AppSettings, 
               public appService:AppService,
               private modalService: ModalService,
@@ -71,8 +70,6 @@ export class PropertyComponent implements OnInit {
         this.sidenav.close();
       } 
     };
-   
-
   } 
 
   ngOnDestroy() {
@@ -88,11 +85,10 @@ export class PropertyComponent implements OnInit {
       .subscribe((data: any)=>{
         if(data.statut== "Error"){
           this.modalService.openModal("error")
-          
           this.statutInteresse= "error"
         }
         else{
-          this.modalService.openModal("error")
+          this.modalService.openModal("succes")
           this.statutInteresse= "succes"
         }
         
@@ -122,6 +118,7 @@ export class PropertyComponent implements OnInit {
   public getPropertyById(id){
     this.proprieteService.getAnnonceById(id).subscribe((data: any)=>{
       this.property = data[0];  
+      this.getParcelleApartementDetail(this.property.location.propertyId)
       this.embedVideo = this.embedService.embed(this.property.videos[1].link);
       setTimeout(() => { 
         this.config.observer = true;
@@ -132,6 +129,7 @@ export class PropertyComponent implements OnInit {
           } 
         }); 
       });
+      this.isReady= true
     });
   }
 
@@ -196,6 +194,13 @@ export class PropertyComponent implements OnInit {
     }); 
   }
 
+  public getParcelleApartementDetail(id){
+    this.proprieteService.parcelleApartementDetail(id)
+      .subscribe((d: any)=>{
+        this.detailParceLApp= d
+      })
+  }
+
   public onIndexChange(index: number) {  
     this.swipers.forEach(swiper => { 
       let elem = swiper['elementRef'].nativeElement;
@@ -250,7 +255,6 @@ export class PropertyComponent implements OnInit {
 
   public onContactFormSubmit(values:Object){
     if (this.contactForm.valid) { 
-      console.log(values);
     } 
   }
 

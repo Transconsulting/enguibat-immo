@@ -67,9 +67,17 @@
                                         (onChangeSorting)="changeSorting($event)"
                                         (onChangeViewType)="changeViewType($event)"></app-properties-toolbar>
             </div>
-            <div *ngFor="let property of properties" [fxFlex]="(viewType=='grid') ? viewCol : 100" class="item"> 
-                <app-property-item [property]="property" [dateCreated]="property.dateCreated" [gallery]="property.gallery" [viewType]="viewType" [viewColChanged]="viewCol"></app-property-item>
-            </div>
+            <ng-container *ngIf="this.properties; else nonReadySection">
+                <div *ngFor="let property of properties" [fxFlex]="(viewType=='grid') ? viewCol : 100" class="item"> 
+                    <app-property-item [property]="property" [dateCreated]="property.dateCreated" [gallery]="property.gallery" [viewType]="viewType" [viewColChanged]="viewCol"></app-property-item>
+                </div>
+            </ng-container> 
+            <ng-template #nonReadySection>
+                <div fxFlex="100" fxLayoutAlign="center center" class="p-2 mt-2">
+                    <mat-spinner color="primary"></mat-spinner>
+                </div>
+            </ng-template>
+            
             <div *ngIf="properties?.length" fxFlex="100" fxLayoutAlign="center center" class="p-2 mt-2">                
                 <app-load-more [step]="2"></app-load-more> 
             </div>

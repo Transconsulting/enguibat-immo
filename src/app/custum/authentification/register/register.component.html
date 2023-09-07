@@ -53,7 +53,6 @@
                   <input matInput maxlength="15" placeholder="Mot de passe" type="password" name="password" [(ngModel)]="this.user.password" #password="ngModel" type="password" minlength="6" required>
                   <!-- <mat-error *ngIf="registerForm.controls.password.errors?.required">Password is required</mat-error>
                   <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error> -->
-                  
                   <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
                       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                   </button>
