@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.removePropertyFromSessionStorage()
     this.getSlides();
     this.getLocations();
     this.getProperties();
@@ -66,7 +67,6 @@ export class HomeComponent implements OnInit {
   public getProperties(){
     if(this.getProprieteFromSessionStorage() == null){
       this.propertieService.listeProperty().subscribe((data:any) => {
-        this.setProprieteToSessionStorage(data)
         // console.log(new Date(data[0].dateCreated).getTime())
         if(this.properties && this.properties.length > 0){
           this.settings.loadMore.page++;
@@ -74,6 +74,8 @@ export class HomeComponent implements OnInit {
         }
         // // Cette instruction permet d'appliquer un filtre sur les données retournées
         let result = this.filterData(data);
+        this.setProprieteToSessionStorage(result.data)
+
         if(result.data.length == 0){
           this.properties.length = 0;
           this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -110,6 +112,7 @@ export class HomeComponent implements OnInit {
       })
     }
     else{
+
       this.properties= this.getProprieteFromSessionStorage()
       if(this.properties && this.properties.length > 0){
         // this.settings.loadMore.page++;
@@ -129,7 +132,7 @@ export class HomeComponent implements OnInit {
         this.isLoading= false
       }
       else{
-        let result2 = this.filterData( this.getProprieteFromSessionStorage());
+        let result2 = this.filterData(this.getProprieteFromSessionStorage());
         this.properties = result2.data;
         this.isLoading= false
       }
@@ -226,9 +229,13 @@ export class HomeComponent implements OnInit {
   public changeCount(count){
     this.count = count;
     this.resetLoadMore();
+    this.removePropertyFromSessionStorage()
     this.properties.length = 0;
     this.getProperties();
+  }
 
+  removePropertyFromSessionStorage(){
+    sessionStorage.removeItem('proprietes')
   }
   public changeSorting(sort){
     this.sort = sort;

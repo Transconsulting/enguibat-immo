@@ -18,8 +18,12 @@ export class LoadMoreComponent implements OnInit {
   }
 
   public startLoad(){
+    this.removePropertyFromSessionStorage()
     this.settings.loadMore.start = true;
     this.settings.loadMore.load = true;
   }
 
+  removePropertyFromSessionStorage(){
+    sessionStorage.removeItem('proprietes')
+  }
 }

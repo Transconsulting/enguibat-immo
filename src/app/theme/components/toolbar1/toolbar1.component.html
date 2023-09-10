@@ -38,15 +38,13 @@
       </a>      
    
       <ng-container *ngIf="!this.connected; else elseSection">
-      <a   mat-mini-fab color="primary" fxHide="false" (click)="signout()" fxHide.gt-xs><mat-icon>logout</mat-icon></a>
+      <a   mat-mini-fab color="primary" fxHide="false" routerLink="/custum/login" fxHide.gt-xs><mat-icon>login</mat-icon></a>
 
-       <a routerLink="/custum/login" mat-raised-button color="primary" fxShow="false" fxShow.gt-xs class="uppercase">Connectez-vous</a>
+       <a   mat-raised-button color="primary" routerLink="/custum/login" fxShow="false" fxShow.gt-xs class="uppercase">Connectez-vous</a>
      </ng-container>
      <ng-template #elseSection>
-      <a   mat-mini-fab color="warn" fxHide="false" fxHide.gt-xs><mat-icon>login</mat-icon></a>
-
-      <a  mat-raised-button color="warn" fxShow="false" (click)="signout()" fxShow.gt-xs class="uppercase">Deconnectez-vous</a>
-
+      <a   mat-mini-fab color="warn"  fxHide="false" (click)="signout()" fxHide.gt-xs><mat-icon>logout</mat-icon></a>
+      <a  mat-raised-button color="warn" (click)="signout()" fxShow="false"   fxShow.gt-xs class="uppercase">Deconnectez-vous</a>
      </ng-template>
     </div>   
   </div>     
