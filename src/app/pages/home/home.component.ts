@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit {
 
   public getProperties(){
           this.propertieService.listeProperty().subscribe((data1:any) => {
-            console.log(data1)
             if(this.properties && this.properties.length > 0){
               this.settings.loadMore.page++;
               this.pagination.page = this.settings.loadMore.page;
