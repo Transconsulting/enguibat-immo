@@ -1,6 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { Property, Location } from 'src/app/app.models'; 
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +13,7 @@ export class PropertiesService {
 public API_URL = environment.url_backend;
 
   public url = environment.url + '/assets/data/'; 
+  public cachedData: any
   public apiKey = 'AIzaSyAO7Mg2Cs1qzo_3jkKkZAKY6jtwIlm41-I';
   public _http= inject(HttpClient)
   constructor(public http:HttpClient, 
@@ -22,7 +23,14 @@ public API_URL = environment.url_backend;
 
 
               public listeProperty(): Observable<Property[]>{
-                return this.http.get<Property[]>(this.API_URL+'listeProperty');
+                if(this.cachedData){
+                 return of(this.cachedData)
+                }
+                else{
+                return this.http.get<Property[]>(this.API_URL+'listeProperty')
+                  .pipe(tap(stream=>this.cachedData = stream));
+
+                }
               }
 
               public parcelleApartementDetail(uuidParcelAppartement: any): Observable<Property[]>{

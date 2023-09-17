@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PropertiesService } from 'src/_services/properties.service';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,6 @@ export class HomeComponent implements OnInit {
   watcher: Subscription;
   activeMediaQuery = '';
   public gallery: any
-
   public slides = [];
   public properties: Property[];
   public viewType: string = 'grid';
@@ -34,9 +34,8 @@ export class HomeComponent implements OnInit {
   public settings: Settings;
   public annonceId: any;
   public isLoading= true;
-  constructor(private proprieteService: PropertiesService,public appSettings:AppSettings, public appService:AppService, public mediaObserver: MediaObserver, private propertieService: PropertiesService) {
+  constructor(private stateService: StateService,public appSettings:AppSettings, public appService:AppService, public mediaObserver: MediaObserver, private propertieService: PropertiesService) {
     this.settings = this.appSettings.settings;
-
     this.watcher = mediaObserver.asObservable()
     .pipe(filter((changes: MediaChange[]) => changes.length > 0), map((changes: MediaChange[]) => changes[0]))
     .subscribe((change: MediaChange) => {
@@ -65,98 +64,50 @@ export class HomeComponent implements OnInit {
   }
 
   public getProperties(){
-    if(this.getProprieteFromSessionStorage() == null){
-      this.propertieService.listeProperty().subscribe((data:any) => {
-        // console.log(new Date(data[0].dateCreated).getTime())
-        if(this.properties && this.properties.length > 0){
-          this.settings.loadMore.page++;
-          this.pagination.page = this.settings.loadMore.page;
-        }
-        // // Cette instruction permet d'appliquer un filtre sur les données retournées
-        let result = this.filterData(data);
-        this.setProprieteToSessionStorage(result.data)
-
-        if(result.data.length == 0){
-          this.properties.length = 0;
-          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-          this.message = 'Aucun résultat trouvé';
-          return false;
-        }
-        if(this.properties && this.properties.length > 0){
-          this.properties = this.properties.concat(result.data);
-          this.isLoading= false
-        }
-        else{
-          this.properties = result.data;
-          this.isLoading= false
-        }
-  
-        this.pagination = result.pagination;
-        this.message = null;
-  
-        if(this.properties.length == this.pagination.total){
-          this.settings.loadMore.complete = true;
-          this.settings.loadMore.result = this.properties.length;
-        }
-        else{
-          this.settings.loadMore.complete = false;
-        }
-        if(this.settings.header == 'map'){
-          this.locations.length = 0;
-          this.properties.forEach(p => {
-            let loc = new Location(p.id, p.location.lat, p.location.lng);
-            this.locations.push(loc);
-          });
-          this.locations = [...this.locations];
-        }
-      })
-    }
-    else{
-
-      this.properties= this.getProprieteFromSessionStorage()
-      if(this.properties && this.properties.length > 0){
-        // this.settings.loadMore.page++;
-        this.pagination.page = this.settings.loadMore.page;
-      }
-      // // Cette instruction permet d'appliquer un filtre sur les données retournées
-      let result = this.filterData(this.properties);
-      if(result.data.length == 0){
-        this.properties.length = 0;
-        this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-        this.message = 'Aucun résultat trouvé';
-        return false;
-      }
-      if(this.properties && this.properties.length > 0){
-        let result2 = this.filterData(this.getProprieteFromSessionStorage());
-        this.properties = result2.data;
-        this.isLoading= false
-      }
-      else{
-        let result2 = this.filterData(this.getProprieteFromSessionStorage());
-        this.properties = result2.data;
-        this.isLoading= false
-      }
-
-      this.pagination = result.pagination;
-      this.message = null;
-
-      if(this.properties.length == this.pagination.total){
-        this.settings.loadMore.complete = true;
-        this.settings.loadMore.result = this.properties.length;
-      }
-      else{
-        this.settings.loadMore.complete = false;
-      }
-      if(this.settings.header == 'map'){
-        this.locations.length = 0;
-        this.properties.forEach(p => {
-          let loc = new Location(p.id, p.location.lat, p.location.lng);
-          this.locations.push(loc);
-        });
-        this.locations = [...this.locations];
-      }
-
-    }
+          this.propertieService.listeProperty().subscribe((data1:any) => {
+            console.log(data1)
+            if(this.properties && this.properties.length > 0){
+              this.settings.loadMore.page++;
+              this.pagination.page = this.settings.loadMore.page;
+            }
+            let result = this.filterData(data1);
+            // this.setProprieteToSessionStorage(result.data1)
+    
+            if(result.data.length == 0){
+              this.properties.length = 0;
+              this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+              this.message = 'Aucun résultat trouvé';
+              return false;
+            }
+            if(this.properties && this.properties.length > 0){
+              this.properties = this.properties.concat(result.data);
+              this.isLoading= false
+            }
+            else{
+              this.properties = result.data;
+              this.isLoading= false
+            }
+      
+            this.pagination = result.pagination;
+            this.message = null;
+      
+            if(this.properties.length == this.pagination.total){
+              this.settings.loadMore.complete = true;
+              this.settings.loadMore.result = this.properties.length;
+            }
+            else{
+              this.settings.loadMore.complete = false;
+            }
+            if(this.settings.header == 'map'){
+              this.locations.length = 0;
+              this.properties.forEach(p => {
+                let loc = new Location(p.id, p.location.lat, p.location.lng);
+                this.locations.push(loc);
+              });
+              this.locations = [...this.locations];
+            }
+          })
+       
     
   }
 
