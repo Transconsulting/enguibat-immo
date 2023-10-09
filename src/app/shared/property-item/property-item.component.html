@@ -15,7 +15,7 @@
             <div class="swiper-container" [swiper]="config">
                 <div class="swiper-wrapper"> 
                     <div *ngFor="let image of gallery" class="swiper-slide">
-                        <img src="{{image.medium}}" class="swiper-lazy">
+                        <img src="{{image.medium}}" [routerLink]="['/properties', property.id]" class="swiper-lazy">
                         <div class="swiper-lazy-preloader"></div>
                     </div> 
                 </div>  
@@ -53,7 +53,7 @@
                     <div>
                         <h3  class="primary-color price">
                             <!-- <span *ngIf="property.priceDollar.sale">{{property.priceDollar.sale}}</span> -->
-                            <span *ngIf="property.priceDollar.rent">{{property.priceDollar.rent}} FGN /mois</span>
+                            <span *ngIf="property.priceDollar.rent" [routerLink]="['/properties', property.id]">{{property.priceDollar.rent}} FGN /mois</span>
                         </h3>
                         
                     </div>
