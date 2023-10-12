@@ -21,15 +21,13 @@ public API_URL = environment.url_backend;
               public translateService: TranslateService,
               @Inject(PLATFORM_ID) private platformId: Object) { }
 
-
-              public listeProperty(): Observable<Property[]>{
+              public  listeProperty(): Observable<Property[]>{
                 if(this.cachedData){
                  return of(this.cachedData)
                 }
                 else{
                 return this.http.get<Property[]>(this.API_URL+'listeProperty')
                   .pipe(tap(stream=>this.cachedData = stream));
-
                 }
               }
 

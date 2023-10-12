@@ -18,7 +18,7 @@ export class PropertyItemComponent implements OnInit {
   @Input() viewType: string = "grid";
   @Input() viewColChanged: boolean = false; 
   @Input() fullWidthPage: boolean = true;   
-  public column:number = 4;
+  public column:number = 2;
   public desc= "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, expedita consequatur ex fuga enim beatae numquam atque neque voluptatum officia aperiam nesciunt nostrum quia! Quisquam optio atque architecto quibusdam itaque?"
   // public address:string; 
   @ViewChild(SwiperDirective) directiveRef: SwiperDirective;
@@ -81,7 +81,7 @@ export class PropertyItemComponent implements OnInit {
     if(value == 25){
       this.column = 4;
     }
-    else if(value == 33.3){
+    else if(value == 33.3 ){
       this.column = 3;
     }
     else if(value == 50){

@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class TypeAnnonceService {
   public API_URL = environment.url_backend;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
 
   public getPropertyStatuses(): Observable<any[]>{

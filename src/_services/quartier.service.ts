@@ -6,10 +6,11 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class QuartierService {
   public API_URL = environment.url_backend;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   
   public getQuartier(): Observable<any[]>{
     return this.http.get<any[]>(this.API_URL+'quartier');

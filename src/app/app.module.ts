@@ -85,7 +85,8 @@ import { SharedService } from 'src/_services/shared.service';
     NgProgressHttpModule, 
     InputFileModule.forRoot(config),
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    
   ],
   providers: [
     AppSettings,

@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   public slides = [];
   public properties: Property[];
   public viewType: string = 'grid';
-  public viewCol: number = 25;
+  public viewCol: number = 50;
   public count: number = 8;
   public sort: string;
   public searchFields: any;
