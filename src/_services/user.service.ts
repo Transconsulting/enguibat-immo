@@ -11,6 +11,10 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getPublicContent(): Observable<any> {
+    return this.http.get(API_URL + "/utilisateurEmail/");
+  }
+
+  getUserByEmail(): Observable<any> {
     return this.http.get(API_URL + "all", { responseType: "text" });
   }
 

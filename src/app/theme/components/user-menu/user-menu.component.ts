@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenStorageService } from 'src/_services/token-storage.service';
 import { AppService } from 'src/app/app.service';
 
 @Component({
@@ -8,9 +9,16 @@ import { AppService } from 'src/app/app.service';
 })
 export class UserMenuComponent implements OnInit {
 
-  constructor(public appService:AppService) { }
+  constructor(public appService: AppService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
+    this.getDecodedToken()
+  }
+
+
+  getDecodedToken(){
+    let user = sessionStorage.getItem('auth-token-guine')
+    const b =this.tokenStorageService.getDecodedAccessToken(user) 
   }
 
 }

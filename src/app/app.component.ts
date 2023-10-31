@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { Settings, AppSettings } from './app.settings';
 import { Router, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -33,5 +33,5 @@ export class AppComponent {
       }            
     });    
   }
-
+ 
 }
