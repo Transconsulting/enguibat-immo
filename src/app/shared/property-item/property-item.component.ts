@@ -5,6 +5,7 @@ import { Settings, AppSettings } from '../../app.settings';
 
 import { AppService } from '../../app.service'; 
 import { CompareOverviewComponent } from '../compare-overview/compare-overview.component'; 
+import { StateLocalService } from 'src/app/services/state-local.service';
 
 @Component({
   selector: 'app-property-item',
@@ -28,7 +29,11 @@ export class PropertyItemComponent implements OnInit {
     clickable: true
   };
   public settings: Settings;
-  constructor(public appSettings:AppSettings, public appService:AppService) {
+  constructor(
+    private _detailState: StateLocalService,
+    public appSettings:AppSettings, 
+    public appService:AppService
+    ) {
     this.settings = this.appSettings.settings;
   }
 
@@ -43,6 +48,9 @@ export class PropertyItemComponent implements OnInit {
     //   this.address = data['results'][0]['formatted_address'];
     // })
   } 
+  setDetailProperty(data: any){
+    this._detailState.updateLocalState(data)
+  }
  
   ngOnChanges(changes: {[propKey: string]: SimpleChange}){  
     if(changes.viewColChanged){
@@ -53,7 +61,6 @@ export class PropertyItemComponent implements OnInit {
         } 
       }
     } 
-
 
     
 

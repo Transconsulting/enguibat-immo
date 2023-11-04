@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/_services/auth.service';
 import { SharedService } from 'src/_services/shared.service';
 import { TokenStorageService } from 'src/_services/token-storage.service';
+import { UserService } from 'src/_services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
       public fb: UntypedFormBuilder,
       public sharedService: SharedService,
+      public _user: UserService,
       public router:Router,
       private authService: AuthService,
       private tokenStorage: TokenStorageService
@@ -49,6 +51,8 @@ export class LoginComponent implements OnInit {
     const { username, password } = this.form;
     this.authService.login(formValues.value.username, formValues.value.password).then(
       (data: any) => {
+        this._user.behavior.next(true)
+
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(
           this.tokenStorage.getDecodedAccessToken(data.token).sub

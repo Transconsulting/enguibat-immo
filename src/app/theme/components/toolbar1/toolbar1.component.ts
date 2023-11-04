@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { SharedService } from 'src/_services/shared.service';
+import { UserService } from 'src/_services/user.service';
 import { AppService } from 'src/app/app.service';
 
 @Component({
@@ -8,12 +10,13 @@ import { AppService } from 'src/app/app.service';
 })
 export class Toolbar1Component implements OnInit {
   @Output() onMenuIconClick: EventEmitter<any> = new EventEmitter<any>();
-  constructor(public appService:AppService, public sharedService: SharedService) { }
+  public connected= false
+ 
+  constructor(private _user: UserService, public  appService:AppService,private _router: Router, public sharedService: SharedService) { }
 
   ngOnInit() { 
     this.checkIfUserIsConnected()
   }
-  public connected= false
   public sidenavToggle(){
     this.onMenuIconClick.emit();
   }
@@ -26,10 +29,12 @@ export class Toolbar1Component implements OnInit {
   }
 
 
+
   public signout(){
           let b= confirm("Voulez-vous vraiment vous deconnecter?")
           if(b){
             this.connected= false
+            this._user.behavior.next(false)
             sessionStorage.clear()
           }
   }

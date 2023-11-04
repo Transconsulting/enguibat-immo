@@ -14,6 +14,7 @@ import { UserService } from 'src/_services/user.service';
 import { TokenStorageService } from 'src/_services/token-storage.service';
 import { InteresseService } from 'src/_services/interesse.service';
 import { ModalService } from 'src/app/_services/modal.service';
+import { StateLocalService } from 'src/app/services/state-local.service';
 
 @Component({
   selector: 'app-property',
@@ -47,6 +48,7 @@ export class PropertyComponent implements OnInit {
   detailParceLApp: any;
   constructor(public appSettings:AppSettings, 
               public appService:AppService,
+              private _detailProperty: StateLocalService,
               private modalService: ModalService,
               public userService: UserService,
               private router: Router,
@@ -72,9 +74,36 @@ export class PropertyComponent implements OnInit {
     };
   } 
 
+  public getPropertyById(id){
+    this._detailProperty.propertyDetail
+      .subscribe((data: any)=>{
+      this.property = data;  
+      this.getParcelleApartementDetail(this.property.location.propertyId)
+      this.embedVideo = this.embedService.embed(this.property.videos[1].link);
+      setTimeout(() => { 
+        this.config.observer = true;
+        this.config2.observer = true; 
+        this.swipers.forEach(swiper => { 
+          if(swiper){
+            swiper.setIndex(0);
+          } 
+        }); 
+      });
+      this.isReady= true
+    });
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.getDataFromLocalState()
   }  
+
+  getDataFromLocalState(){
+    this._detailProperty.propertyDetail
+      .subscribe((data: any)=>{
+        // console.log("-----------------------property",data)
+      })
+  }
 
    getUserInfosAndAnnonceInfo(){
     this.btnClicked= true
@@ -94,9 +123,6 @@ export class PropertyComponent implements OnInit {
         
       }
       )
-
-
-
       
     }
     else{
@@ -113,23 +139,25 @@ export class PropertyComponent implements OnInit {
     (window.innerWidth < 960) ? this.sidenavOpen = false : this.sidenavOpen = true; 
   }
 
-  public getPropertyById(id){
-    this.proprieteService.getAnnonceById(id).subscribe((data: any)=>{
-      this.property = data[0];  
-      this.getParcelleApartementDetail(this.property.location.propertyId)
-      this.embedVideo = this.embedService.embed(this.property.videos[1].link);
-      setTimeout(() => { 
-        this.config.observer = true;
-        this.config2.observer = true; 
-        this.swipers.forEach(swiper => { 
-          if(swiper){
-            swiper.setIndex(0);
-          } 
-        }); 
-      });
-      this.isReady= true
-    });
-  }
+  
+
+  // public getPropertyById(id){
+  //   this.proprieteService.getAnnonceById(id).subscribe((data: any)=>{
+  //     this.property = data[0];  
+  //     this.getParcelleApartementDetail(this.property.location.propertyId)
+  //     this.embedVideo = this.embedService.embed(this.property.videos[1].link);
+  //     setTimeout(() => { 
+  //       this.config.observer = true;
+  //       this.config2.observer = true; 
+  //       this.swipers.forEach(swiper => { 
+  //         if(swiper){
+  //           swiper.setIndex(0);
+  //         } 
+  //       }); 
+  //     });
+  //     this.isReady= true
+  //   });
+  // }
 
   ngAfterViewInit(){
     this.config = {
